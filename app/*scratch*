@@ -1,0 +1,59 @@
+;; This buffer is for text that is not saved, and for Lisp evaluation.
+;; To create a file, visit it with <open> and enter text in its buffer.
+
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import Prelude  hiding ( head, id, div)
+import Text.Blaze.Html4.Strict hiding ( map )
+import Text.Blaze.Html4.Strict.Attributes  hiding ( title )
+
+--import Text.Blaze.Renderer.Utf8  ( renderMarkup )
+import Text.Blaze.Renderer.Utf8  ( renderMarkup )
+
+import Lib
+
+-- data Attribute = Attribute String String deriving Show -- Name and Value
+
+-- data Link = LinkElement String String String Link
+--   | Add Attribute Link
+--   | Empty
+--   deriving (Show)
+
+-- --data Apppend = Append Attribute (Append) | End
+
+-- href value = Attribute "href" value
+
+-- type_ value = Attribute "type" value
+
+-- rel value = Attribute "rel" value
+
+-- (!) :: Link -> Attribute -> Link
+-- (!) link attr = Add attr link
+
+-- linkElement = LinkElement "<a" "/a>" "link to css" Empty
+
+
+-- renderString :: Link -> String -> String
+-- renderString link s = go id
+--   where
+--     go :: (String -> String) -> Link -> String -> String
+--     go attrs (Add (Attribute String String) link) = glip go h $
+
+
+page1 :: Markup
+page1 = html $ do
+        head $ do
+                title "Introduction page."
+                link ! rel "stylesheet" ! type_ "text/css" ! href "screen.css"
+        body $ do
+                div ! id "header" $ "Syntax"
+                p "This is an example of BlazeMarkup syntax."
+                ul $ mapM_ (li . toMarkup . show) [1, 2, 3]
+
+main :: IO ()
+main = do
+  let x = renderMarkup page1
+  --let link' = link ! (rel "stylesheet") ! (type_ "test/css") ! (href "screen.css")
+  putStrLn $ show x
