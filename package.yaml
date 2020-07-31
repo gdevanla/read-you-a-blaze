@@ -56,8 +56,18 @@ executables:
     dependencies:
     - read-you-a-blaze
 
-  read-you-a-blaze-second:
+  read-you-a-blaze-three:
     main:                third.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - read-you-a-blaze
+
+  read-you-a-blaze-four:
+    main:                four.hs
     source-dirs:         app
     ghc-options:
     - -threaded
