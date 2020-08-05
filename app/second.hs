@@ -6,6 +6,7 @@ import           Prelude                 hiding ( head
                                                 , id
                                                 , div
                                                 )
+import           GHC.Exts                       ( IsString(..) )
 
 data Attribute = Attribute String String
   deriving (Show)
@@ -28,6 +29,10 @@ data HtmlM a = Html (HtmlM a)
 
 type Html = HtmlM ()
 type Markup = HtmlM ()
+
+instance (a ~ ()) => IsString (HtmlM a) where
+        fromString x = Content (fromString x) mempty
+
 
 -- Walk through the Html data structure to return the embedded value. Used in Functor, Applicative and Monad instances
 htmlValue :: HtmlM a -> a
@@ -146,28 +151,28 @@ foldHtml :: [Html] -> Html
 foldHtml (x:xs) = Append x (foldHtml xs)
 foldHtml [] = Empty ()
 
+-- prior- final clean
 -- page1 :: Html
--- page1 = let
---   link' = Link ! rel "style.css" ! type_ "text/html"
---   title' = Title "Introduction page."
---   head' = Head (Append link' title')
---   div' = mult Div (id "header") $ (Content "Syntax")
---   p' = P $ Content "This is an example of Blazemarkup syntax."
---   ul' = UL $ foldHtml $ (map (LI . toMarkup . show) [1, 2, 3])
---   body' = Body (Append (Append div' p') ul')
---   html' = HTML $ Append head' body'
---   in
---     html'
+-- page1 = Html $ do
+--   Head $ do
+--     Link () ! rel "style.css" ! type_ "text/html"
+--     Title "Introduction page." ()
+--   Body $ do
+--     mult Div (id "header") $ Content "Syntax" ()
+--     P $ Content "This is an example of Blazemarkup syntax." ()
+--     UL $ foldHtml $ (map (LI . toMarkup . show) [1, 2, 3])
+
 
 page1 :: Html
 page1 = Html $ do
-  Head $ do
-    Link () ! rel "style.css" ! type_ "text/html"
-    Title "Introduction page." ()
-  Body $ do
-    mult Div (id "header") $ Content "Syntax" ()
-    P $ Content "This is an example of Blazemarkup syntax." ()
-    UL $ foldHtml $ (map (LI . toMarkup . show) [1, 2, 3])
+        Head $ do
+                Link () ! rel "style.css" ! type_ "text/html"
+                Title "Introduction page." ()
+        Body $ do
+                mult Div (id "header") $ "Syntax"
+                P $ "This is an example of Blazemarkup syntax."
+                UL $ mapM_ (LI . toMarkup . show) [1, 2, 3]
+
 
 main :: IO ()
 main = do
