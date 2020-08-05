@@ -19,13 +19,7 @@ data Html = HTML Html
   | UL Html
   | LI Html
   | P Html
-  -- | Table Html
-  -- | Td Html
-  -- | Tr Html
-  -- | Th Html
   | Append Html Html
---  | Parent Html Html
---  | Leaf Html
   | AddAttribute Attribute Html
   | Content String
   | Empty
@@ -50,12 +44,6 @@ renderMarkup attrs (UL content) =
         "<ul" ++ attrs ++ ">" ++ (renderMarkup "" content) ++ "</ul>"
 renderMarkup attrs (LI content) =
         "<li" ++ attrs ++ ">" ++ (renderMarkup "" content) ++ "</li>"
-
--- renderMarkup attrs (Table content) = "<table  " ++ attrs ++ ">" ++ (renderMarkup "" content) ++ "</table>"
--- renderMarkup attrs (Tr content) = "<tr  " ++ attrs ++ ">" ++ renderMarkup "" content ++ "</tr>"
--- renderMarkup attrs (Th content) = "<th  " ++ attrs ++ ">" ++ renderMarkup "" content ++ "</th>"
--- renderMarkup attrs (Td content) = "<td  " ++ attrs ++ ">" ++ renderMarkup "" content ++ "</td>"
-
 renderMarkup attrs (Append html1 html2) =
   (renderMarkup attrs html1) ++ (renderMarkup attrs html2)
 renderMarkup attrs (AddAttribute (Attribute k v) html) = flip renderMarkup html $
