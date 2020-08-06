@@ -10,7 +10,6 @@ import GHC.Exts  (IsString (..))
 data Attribute = Attribute String String
   deriving (Show)
 
-
 type Tag = String
 type Open = String
 type Close = String
@@ -139,14 +138,5 @@ page1 = html
         p "This is an example of BlazeMarkup syntax."
         ul $ mapM_ (li . toMarkup . show) [1, 2, 3]
 
--- myHtml :: Html
--- myHtml = Html $ do
---   Head $ do
---     Link () ! rel "style.css" ! type_ "text/html"
---     HRef "myLink" () ! href "http://read-you-a-blaze/"
-
 main :: IO ()
 main = putStrLn $ renderString "" page1
--- main = do
---   putStrLn $ renderString "" $ Link ! rel "style.css" ! type_ "text/html"
---   putStrLn $ renderString "" $ Head (Append (Append (Link ! rel "style.css" ! type_ "text/html") (HRef "LinkName" ! href "http://blaze-sample.com")) (Content "content"))

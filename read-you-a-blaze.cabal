@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b84dad315ad0bab98c956e0d9dac673ec090dd84a8ef845760716f43413e5096
+-- hash: 7fc73c249d0fdab676e90f624ccc9ae127cea9021ba7af4a889e1c6b9ac3f559
 
 name:           read-you-a-blaze
 version:        0.1.0.0
@@ -36,18 +36,6 @@ library
       base >=4.7 && <5
   default-language: Haskell2010
 
-executable read-you-a-blaze-exe
-  main-is: zero.hs
-  other-modules:
-      Paths_read_you_a_blaze
-  hs-source-dirs:
-      app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      base >=4.7 && <5
-    , read-you-a-blaze
-  default-language: Haskell2010
-
 executable read-you-a-blaze-first
   main-is: first.hs
   other-modules:
@@ -61,7 +49,7 @@ executable read-you-a-blaze-first
   default-language: Haskell2010
 
 executable read-you-a-blaze-fourth
-  main-is: four.hs
+  main-is: fourth.hs
   other-modules:
       Paths_read_you_a_blaze
   hs-source-dirs:
